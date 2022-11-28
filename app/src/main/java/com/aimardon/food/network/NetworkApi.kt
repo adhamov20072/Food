@@ -12,7 +12,7 @@ interface NetworkApi {
     // addRecipeInformation=true
     // &
     // apiKey=04ebf79f1e5a453b905f660a6f0b0eaa
-    @GET("complexSearch")
+    @GET("/complexSearch")
     suspend fun getInformation(
         @Query("diet=number") diet: Int,
         @Query("addRecipeInformation") addRecipeInformation: Boolean,

@@ -25,18 +25,18 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        adapter = Adapter()
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.recyclerView.adapter=adapter
+        adapter = Adapter()
+
         val retrofit=RetrofitHelper.getRetrofit().create(NetworkApi::class.java)
         val factory=HomeViewModelFactory(retrofit,requireActivity().application)
         homeViewModel=ViewModelProvider(requireActivity(),factory)[HomeViewModel::class.java]
-        homeViewModel.get(50,true,"04ebf79f1e5a453b905f660a6f0b0eaa")
+        homeViewModel.get(10,true,"04ebf79f1e5a453b905f660a6f0b0eaa")
         homeViewModel.food.observe(viewLifecycleOwner){
             when(it){
                 is NetworkResult.Error -> {
@@ -47,6 +47,7 @@ class HomeFragment : Fragment() {
                 }
                 is NetworkResult.Success -> {
                     adapter.submitList(it.data)
+                    binding.recyclerView.adapter=adapter
                 }
             }
         }
