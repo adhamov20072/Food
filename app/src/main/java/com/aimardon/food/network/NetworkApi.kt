@@ -1,6 +1,5 @@
 package com.aimardon.food.network
 
-import com.aimardon.food.models.Food
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

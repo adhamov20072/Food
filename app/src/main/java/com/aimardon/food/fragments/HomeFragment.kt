@@ -1,11 +1,13 @@
 package com.aimardon.food.fragments
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.aimardon.food.adapters.Adapter
 import com.aimardon.food.databinding.FragmentHomeBinding
@@ -23,16 +25,18 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        adapter = Adapter()
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = Adapter()
         binding.recyclerView.adapter=adapter
         val retrofit=RetrofitHelper.getRetrofit().create(NetworkApi::class.java)
         val factory=HomeViewModelFactory(retrofit,requireActivity().application)
         homeViewModel=ViewModelProvider(requireActivity(),factory)[HomeViewModel::class.java]
+        homeViewModel.get(50,true,"04ebf79f1e5a453b905f660a6f0b0eaa")
         homeViewModel.food.observe(viewLifecycleOwner){
             when(it){
                 is NetworkResult.Error -> {
