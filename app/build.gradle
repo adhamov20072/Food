@@ -38,7 +38,7 @@ android {
 dependencies {
     //Okhttp
     implementation 'com.squareup.okhttp3:okhttp'
-    implementation 'com.squareup.okhttp3:logging-interceptor'
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     //Checker
     debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.5.2"
