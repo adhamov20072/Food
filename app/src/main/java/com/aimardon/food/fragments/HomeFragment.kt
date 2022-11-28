@@ -16,6 +16,8 @@ import com.aimardon.food.network.NetworkResult
 import com.aimardon.food.network.RetrofitHelper
 import com.aimardon.food.viewmodels.HomeViewModel
 import com.aimardon.food.viewmodels.HomeViewModelFactory
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
@@ -33,12 +35,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = Adapter()
 
-        val retrofit=RetrofitHelper.getRetrofit().create(NetworkApi::class.java)
-        val factory=HomeViewModelFactory(retrofit,requireActivity().application)
-        homeViewModel=ViewModelProvider(requireActivity(),factory)[HomeViewModel::class.java]
-        homeViewModel.get(10,true,"04ebf79f1e5a453b905f660a6f0b0eaa")
-        homeViewModel.food.observe(viewLifecycleOwner){
-            when(it){
+        val retrofit = RetrofitHelper.getRetrofit().create(NetworkApi::class.java)
+        val factory = HomeViewModelFactory(retrofit, requireActivity().application)
+        homeViewModel = ViewModelProvider(requireActivity(), factory)[HomeViewModel::class.java]
+        homeViewModel.get("number=50", true, "04ebf79f1e5a453b905f660a6f0b0eaa")
+        homeViewModel.food.observe(viewLifecycleOwner) {
+            when (it) {
                 is NetworkResult.Error -> {
                     Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
                 }
@@ -47,7 +49,7 @@ class HomeFragment : Fragment() {
                 }
                 is NetworkResult.Success -> {
                     adapter.submitList(it.data)
-                    binding.recyclerView.adapter=adapter
+                    binding.recyclerView.adapter = adapter
                 }
             }
         }
