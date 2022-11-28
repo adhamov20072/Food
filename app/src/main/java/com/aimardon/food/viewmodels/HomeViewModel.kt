@@ -8,16 +8,20 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.aimardon.food.models.Food
+import androidx.lifecycle.viewModelScope
 import com.aimardon.food.network.NetworkApi
 import com.aimardon.food.network.NetworkResult
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 
 class HomeViewModel(val networkApi: NetworkApi, application: Application) :
     AndroidViewModel(application) {
-    val food:MutableLiveData<NetworkResult<Food>> = MutableLiveData()
+    val food:MutableLiveData<NetworkResult<List<com.aimardon.food.models.Result>>> = MutableLiveData()
     @RequiresApi(Build.VERSION_CODES.M)
-    suspend fun getSafeCall (diet: Int,addRecipeInformation: Boolean,apiKey: String){
+    fun get(diet: Int, addRecipeInformation: Boolean, apiKey: String)=viewModelScope.launch{
+        getSafeCall(diet,addRecipeInformation,apiKey)
+    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    suspend fun getSafeCall (diet: Int, addRecipeInformation: Boolean, apiKey: String){
         food.value = NetworkResult.Loading()
         if (hasInternetConnection()){
             val response=networkApi.getInformation(diet,addRecipeInformation,apiKey)

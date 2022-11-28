@@ -18,5 +18,5 @@ interface NetworkApi {
         @Query("diet=number") diet: Int,
         @Query("addRecipeInformation") addRecipeInformation: Boolean,
         @Query("apiKey") apiKey: String
-    ): Response<List<Food>>
+    ): Response<List<com.aimardon.food.models.Result>>
 }
