@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aimardon.food.databinding.RecyclerItemBinding
-import com.aimardon.food.models.Food
 import com.bumptech.glide.Glide
 
 class Adapter : ListAdapter<Food, Adapter.MyViewHolder>(diffUtil) {

@@ -1,6 +1,6 @@
 package com.aimardon.food.models
 
-data class WeightPerServing(
-    val amount: Int,
+data class Length(
+    val number: Int,
     val unit: String
 )

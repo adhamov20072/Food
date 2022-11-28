@@ -7,19 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.aimardon.food.R
 import com.aimardon.food.adapters.Adapter
 import com.aimardon.food.databinding.FragmentHomeBinding
-import com.aimardon.food.models.Food
-import com.aimardon.food.models.FoodNew
 import com.aimardon.food.network.NetworkApi
 import com.aimardon.food.network.NetworkResult
 import com.aimardon.food.network.RetrofitHelper
 import com.aimardon.food.viewmodels.HomeViewModel
 import com.aimardon.food.viewmodels.HomeViewModelFactory
-import com.bumptech.glide.Glide
-import retrofit2.Retrofit
-import retrofit2.create
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
@@ -48,7 +42,7 @@ class HomeFragment : Fragment() {
 
                 }
                 is NetworkResult.Success -> {
-                    
+                    adapter.submitList(it.data)
                 }
             }
         }

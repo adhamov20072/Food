@@ -1,6 +1,6 @@
 package com.aimardon.food.models
 
-data class Ingredient(
+data class Equipment(
     val id: Int,
     val image: String,
     val localizedName: String,
