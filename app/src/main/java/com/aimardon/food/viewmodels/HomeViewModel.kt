@@ -17,16 +17,16 @@ class HomeViewModel(private val networkApi: NetworkApi, application: Application
     AndroidViewModel(application) {
     val food:MutableLiveData<NetworkResult<List<com.aimardon.food.models.Result>>> = MutableLiveData()
     @RequiresApi(Build.VERSION_CODES.M)
-    fun get(diet: String, addRecipeInformation: Boolean, apiKey: String)=viewModelScope.launch{
-        getSafeCall(diet,addRecipeInformation,apiKey)
+    fun get(number: Int, addRecipeInformation: Boolean, apiKey: String)=viewModelScope.launch{
+        getSafeCall(number,addRecipeInformation,apiKey)
     }
     @RequiresApi(Build.VERSION_CODES.M)
-    suspend fun getSafeCall (diet: String, addRecipeInformation: Boolean, apiKey: String){
+    suspend fun getSafeCall (number: Int, addRecipeInformation: Boolean, apiKey: String){
         food.value = NetworkResult.Loading()
         if (hasInternetConnection()){
-            val response=networkApi.getInformation(diet,addRecipeInformation,apiKey)
+            val response=networkApi.getInformation(number,addRecipeInformation,apiKey)
             if (response.isSuccessful){
-                food.value=NetworkResult.Success(response.body())
+                food.value=NetworkResult.Success(response.body()?.results)
             }else{
                 food.value=NetworkResult.Error(response.message())
             }

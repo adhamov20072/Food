@@ -38,11 +38,11 @@ class HomeFragment : Fragment() {
         val retrofit = RetrofitHelper.getRetrofit().create(NetworkApi::class.java)
         val factory = HomeViewModelFactory(retrofit, requireActivity().application)
         homeViewModel = ViewModelProvider(requireActivity(), factory)[HomeViewModel::class.java]
-        homeViewModel.get("number=50", true, "04ebf79f1e5a453b905f660a6f0b0eaa")
+        homeViewModel.get(50, true, "04ebf79f1e5a453b905f660a6f0b0eaa")
         homeViewModel.food.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Error -> {
-                    Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show()
                 }
                 is NetworkResult.Loading -> {
 
